@@ -1,0 +1,123 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
+    {
+      "src": "interactions-core.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/trendyol/[action].js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "lib/**",
+          "interactions-core.js"
+        ]
+      }
+    },
+    {
+      "src": "api/marketplaces/[action].js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "lib/**"
+      }
+    },
+    {
+      "src": "api/ai/[action].js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "lib/**"
+      }
+    },
+    {
+      "src": "tenant-client.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "legacy-invoice-core.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "legacy-invoices.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "legacy-invoices.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "decision-core.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "decision-ui.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "decision.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "order-merge.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "platform/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/panel.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "index.html",
+          "lib/**"
+        ]
+      }
+    },
+    {
+      "src": "api/platform.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "lib/**"
+        ],
+        "maxDuration": 60
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(?:index.html)?",
+      "dest": "/api/panel.js"
+    },
+    {
+      "src": "/api/platform",
+      "dest": "/api/platform.js"
+    },
+    {
+      "src": "/platform/?",
+      "dest": "/platform/index.html"
+    },
+    {
+      "src": "/api/trendyol/([a-zA-Z0-9-]+)",
+      "dest": "/api/trendyol/[action].js?action=$1"
+    },
+    {
+      "src": "/api/marketplaces/([a-zA-Z0-9-]+)",
+      "dest": "/api/marketplaces/[action].js?action=$1"
+    },
+    {
+      "src": "/api/ai/([a-zA-Z0-9-]+)",
+      "dest": "/api/ai/[action].js?action=$1"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}

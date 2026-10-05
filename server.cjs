@@ -1,0 +1,11 @@
+'use strict';
+const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
+const files=new Set(['/interactions-core.js','/decision-core.js','/decision-ui.js','/decision.css','/order-merge.js','/tenant-client.js','/legacy-invoice-core.js','/legacy-invoices.js','/legacy-invoices.css','/platform/app.js','/platform/app.css','/platform/invoice-view.js','/assets/aras.png','/assets/yurtici.png','/assets/trendyol-express.png']);
+http.createServer(async(req,res)=>{try{const u=new URL(req.url,'http://localhost');req.query=Object.fromEntries(u.searchParams);res.status=n=>{res.statusCode=n;return res;};res.json=value=>{res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(value));};
+ if(req.method!=='GET'&&req.method!=='HEAD'){const parts=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>2900000)return res.status(413).json({error:'İstek çok büyük.'});parts.push(chunk);}if(parts.length){try{req.body=JSON.parse(Buffer.concat(parts).toString());}catch{return res.status(400).json({error:'Geçersiz JSON.'});}}}
+ if(u.pathname==='/'||u.pathname==='/index.html')return require('./api/panel.js')(req,res);
+ if(u.pathname==='/api/platform')return require('./api/platform.js')(req,res);
+ const match=u.pathname.match(/^\/api\/(trendyol|marketplaces|ai)\/([\w-]+)$/);if(match){req.query.action=match[2];return require('./api/'+match[1]+'/[action].js')(req,res);}
+ let file;if(['/platform','/platform/','/platform/index.html'].includes(u.pathname))file='platform/index.html';else if(files.has(u.pathname))file=u.pathname.slice(1);else{res.statusCode=404;return res.end('Bulunamadı');}
+ res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',file.endsWith('.html')?'text/html; charset=utf-8':file.endsWith('.js')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'image/png');res.end(fs.readFileSync(path.join(__dirname,file)));
+ }catch{res.statusCode=500;res.end(JSON.stringify({error:'İşlem tamamlanamadı.'}));}}).listen(Number(process.env.PORT||3104),'127.0.0.1',()=>console.log('Birleşik panel: http://localhost:'+(process.env.PORT||3104)));

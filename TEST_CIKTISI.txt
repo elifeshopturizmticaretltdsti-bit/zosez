@@ -1,0 +1,32 @@
+
+> zosez-satici-platformu@1.0.0 test
+> node --test tests/*.test.cjs
+
+✔ Mağaza şifrelemesi rastgele; farklı satıcı, mağaza veya anahtar ile açılamaz (8.5768ms)
+✔ CSRF yabancı origin, eksik özel başlık ve yanlış içerik türünü reddeder (0.3971ms)
+✔ Oturumlar HttpOnly Secure SameSite; silme iki çerezi de temizler (0.3673ms)
+✔ Eksik kurulum kapalı; üretimde HTTP kabul edilmez (0.7732ms)
+✔ Kimlik, metin ve PDF sınırları uygulanır (12.5601ms)
+✔ 2 MB sınırındaki PDF doğrulaması büyük dosyada yığın taşmasına neden olmaz (14.1398ms)
+✔ DB sorguları kullanıcı kimliğiyle sınırlandırılır; gönderilen owner_id yok sayılır (36.6166ms)
+✔ Eksik fiyat ve stok null kalır; gerçek sıfır korunur (1.6524ms)
+✔ Varyant barkodları ayrı satır olur; barkodsuz ürün reddedilir (0.457ms)
+✔ Siparişler sipariş numarası değil paket kimliği taşır (0.5821ms)
+✔ Tarih pencereleri boşluksuz, çakışmasız, en fazla 10 gün; eski tarihler reddedilir (0.7607ms)
+✔ Taslak fatura adresini kullanır; eksik adres veya firma uydurulmaz (0.8155ms)
+✔ Fatura taslağı Türkçe metni korur, HTML enjeksiyonunu kaçışlar (93.5296ms)
+✔ Stok ve fiyat doğrulaması sıfır stoğa izin verir; boş negatif veya uyumsuz fiyat reddedilir (0.478ms)
+✔ Batch genel tamamlandı bilgisi yetmez: doğru barkodun ürün sonucu doğrulanır (0.3002ms)
+✔ Trendyol hatası yanıt gövdesindeki sırrı dışarı sızdırmaz (1.2833ms)
+✔ Tüm uygulama JS dosyaları sözdiziminden geçer; Vercel routes/headers çakışması yok (7.822ms)
+✔ Gerçek PostgreSQL: iki satıcının mağaza, sipariş, fatura, dosya ve işleri ayrılır (4294.584ms)
+✔ HTTP uçtan uca: oturum, mağaza doğrulama, sayfalama, fatura, stok onayı ve kiracı sınırları (478.808ms)
+✔ HTTP: CSRF reddi, aktarım hatası mevcut veriyi korur ve aynı sayfadan devam eder (31.5419ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5577.5522
